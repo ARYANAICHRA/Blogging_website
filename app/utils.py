@@ -18,16 +18,21 @@ def generate_otp():
 
 
 def send_email(subject, recipients, html_body, text_body=''):
+    import sendgrid
+    from sendgrid.helpers.mail import Mail, Email, To, Content
     try:
-        sender = current_app.config.get('MAIL_DEFAULT_SENDER')
-        msg = Message(subject=subject, sender=sender, recipients=recipients)
-        msg.html = html_body
-        msg.body = text_body or 'Please view this email in an HTML-capable client.'
-        mail.send(msg)
+        sg = sendgrid.SendGridAPIClient(api_key=os.environ.get('SENDGRID_API_KEY'))
+        from_email = Email(current_app.config.get('MAIL_DEFAULT_SENDER')[1]
+                          if isinstance(current_app.config.get('MAIL_DEFAULT_SENDER'), tuple)
+                          else current_app.config.get('MAIL_DEFAULT_SENDER'))
+        for recipient in recipients:
+            to_email = To(recipient)
+            content = Content("text/html", html_body)
+            mail = Mail(from_email, to_email, subject, content)
+            sg.client.mail.send.post(request_body=mail.get())
         return True
     except Exception as exc:
         print(f"[EMAIL ERROR] {exc}")
-        traceback.print_exc()
         return False
 
 
