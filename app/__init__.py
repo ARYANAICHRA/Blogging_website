@@ -43,6 +43,8 @@ def create_app():
     app.config['MAIL_DEFAULT_SENDER'] = ('BlogSphere', _mail_sender)
     app.config['MAIL_MAX_EMAILS'] = None
     app.config['MAIL_ASCII_ATTACHMENTS'] = False
+    app.config['PREFERRED_URL_SCHEME'] = os.environ.get('PREFERRED_URL_SCHEME', 'http')
+    app.config['APPLICATION_ROOT'] = '/'
 
     db.init_app(app)
     login_manager.init_app(app)
