@@ -1,3 +1,8 @@
+![Build Status](https://github.com/ARYANAICHRA/Blogging_web_application/actions/workflows/python-app.yml/badge.svg)
+![Python](https://img.shields.io/badge/Python-3.10-blue)
+![Flask](https://img.shields.io/badge/Flask-WebApp-black)
+![Database](https://img.shields.io/badge/Database-SQLite-blue)
+
 # BlogSphere
 
 A full-stack blogging platform built with Flask. Supports user registration, markdown posts, comments, follows, bookmarks, likes, two-factor authentication, and a full admin panel.
